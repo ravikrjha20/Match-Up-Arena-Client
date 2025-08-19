@@ -21,6 +21,8 @@ const useAuthStore = create((set, get) => ({
 
   login: async (req) => {
     try {
+      console.log(axiosInstance.getUri());
+
       const res = await axiosInstance.post("/auth/login", req, {
         withCredentials: true,
       });
