@@ -1,11 +1,7 @@
 // src/sockets/index.js
 import { io } from "socket.io-client";
 
-const API_URLS = import.meta.env.VITE_API_URLS.split(",");
-const BASE_URL =
-  window.location.hostname === "localhost"
-    ? API_URLS[0].replace("/api/v1", "")
-    : API_URLS[1].replace("/api/v1", "");
+const BASE_URL = import.meta.env.VITE_API_URLS;
 
 let socket = null;
 
