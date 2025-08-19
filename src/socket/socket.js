@@ -1,25 +1,26 @@
-// src/sockets/index.js
-import { io } from "socket.io-client";
+const { Server } = require("socket.io");
+const http = require("http");
+const express = require("express");
 
-const BASE_URL = import.meta.env.VITE_API_URLS;
+const app = express();
+const server = http.createServer(app);
 
-let socket = null;
+const allowedOrigins = process.env.CLIENT_URLS.split(",").map((o) => o.trim());
 
-export const connectSocket = (userId) => {
-  if (!userId || (socket && socket.connected)) return;
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
-  socket = io(BASE_URL, {
-    query: { userId },
+io.on("connection", (socket) => {
+  console.log("⚡ Socket connected:", socket.id, socket.handshake.query.userId);
+
+  socket.on("disconnect", () => {
+    console.log("❌ Socket disconnected:", socket.id);
   });
+});
 
-  return socket;
-};
-
-export const getSocket = () => socket;
-
-export const disconnectSocket = () => {
-  if (socket?.connected) {
-    socket.disconnect();
-    socket = null;
-  }
-};
+module.exports = { app, server, io };
