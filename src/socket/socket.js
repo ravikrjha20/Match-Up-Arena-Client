@@ -11,7 +11,7 @@ export const connectSocket = (userId) => {
   socket = io(BASE_URL, {
     query: { userId },
     withCredentials: true, // 👈 allow cookies if you’re using them
-    transports: ["websocket"], // 👈 force websockets (avoid long polling on Render)
+    // transports: ["websocket"], // 👈 force websockets (avoid long polling on Render)
     reconnection: true, // 👈 optional: auto-reconnect
     reconnectionAttempts: 5, // 👈 retry a few times
   });
