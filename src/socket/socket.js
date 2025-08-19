@@ -1,26 +1,29 @@
-const { Server } = require("socket.io");
-const http = require("http");
-const express = require("express");
+// src/sockets/index.js
+import { io } from "socket.io-client";
 
-const app = express();
-const server = http.createServer(app);
+const BASE_URL = import.meta.env.VITE_API_URLS;
 
-const allowedOrigins = process.env.CLIENT_URLS.split(",").map((o) => o.trim());
+let socket = null;
 
-const io = new Server(server, {
-  cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+export const connectSocket = (userId) => {
+  if (!userId || (socket && socket.connected)) return;
 
-io.on("connection", (socket) => {
-  console.log("⚡ Socket connected:", socket.id, socket.handshake.query.userId);
-
-  socket.on("disconnect", () => {
-    console.log("❌ Socket disconnected:", socket.id);
+  socket = io(BASE_URL, {
+    query: { userId },
+    withCredentials: true, // 👈 allow cookies if you’re using them
+    transports: ["websocket"], // 👈 force websockets (avoid long polling on Render)
+    reconnection: true, // 👈 optional: auto-reconnect
+    reconnectionAttempts: 5, // 👈 retry a few times
   });
-});
 
-module.exports = { app, server, io };
+  return socket;
+};
+
+export const getSocket = () => socket;
+
+export const disconnectSocket = () => {
+  if (socket?.connected) {
+    socket.disconnect();
+    socket = null;
+  }
+};
