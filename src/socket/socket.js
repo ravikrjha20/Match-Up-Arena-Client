@@ -13,7 +13,7 @@ export const connectSocket = (userId) => {
   socket = io(BASE_URL, {
     path: "/socket.io",
     transports: ["websocket"], // ⭐ no polling
-    query: { userId },
+    auth: { userId },
     withCredentials: true,
     reconnection: true,
     reconnectionAttempts: 5,
