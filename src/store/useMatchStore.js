@@ -109,7 +109,7 @@ const useMatchStore = create((set, get) => ({
   makeMove: async (cellIndex) => {
     const { opponentId, userMask, opponentMask, turn, isFriend } = get();
     if (!turn) return;
-    get().setUserMark(get().userMask | (1 << cellIndex));
+    get().setUserMask(get().userMask | (1 << cellIndex));
     const bit = 1 << cellIndex;
     if (userMask & bit || opponentMask & bit) return;
 
