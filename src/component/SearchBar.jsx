@@ -10,6 +10,7 @@ const SearchBar = () => {
 
   const { suggestedFriends, getSuggestions } = useSearchStore();
   const handleUserClick = (user) => {
+    setShowDropdown(false);
     navigate(`/profile/${user.username || user._id}`);
   };
   useEffect(() => {
