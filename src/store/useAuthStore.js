@@ -21,8 +21,6 @@ const useAuthStore = create((set, get) => ({
 
   login: async (req) => {
     try {
-      console.log(axiosInstance.getUri());
-
       const res = await axiosInstance.post("/auth/login", req, {
         withCredentials: true,
       });
@@ -36,7 +34,17 @@ const useAuthStore = create((set, get) => ({
       throw error;
     }
   },
-
+  update: async (req) => {
+    try {
+      const res = await axiosInstance.patch("/auth/update", req, {
+        withCredentials: true,
+      });
+      set({ user: res.data.user });
+      toast.success("Profile updated successful");
+    } catch (error) {
+      throw error;
+    }
+  },
   register: async (req) => {
     try {
       const res = await axiosInstance.post("/auth/register", req, {
@@ -70,10 +78,7 @@ const useAuthStore = create((set, get) => ({
   connectSocket: (userId) => {
     connectSocket(
       userId,
-      (opponentId) => {
-        // handle matchFound
-        console.log("🏁 Match found with:", opponentId);
-      },
+      (opponentId) => {},
       (userIds) => {
         set({ onlineUsers: userIds });
       }

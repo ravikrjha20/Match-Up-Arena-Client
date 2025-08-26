@@ -8,3 +8,6 @@ export { default as LoginPage } from "./LoginPage";
 export { default as Register } from "./RegisterPage";
 export { default as Logout } from "./Logout";
 export { default as PlayWithBot } from "./PlayWithBot";
+export { default as UpdateProfile } from "./UpdateProfile";
+export { default as PlayerHistory } from "./PlayerHistory";
+export { default as LeaderBoard } from "./LeaderBoard";

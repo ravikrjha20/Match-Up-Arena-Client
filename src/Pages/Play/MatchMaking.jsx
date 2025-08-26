@@ -4,6 +4,7 @@ import useMatchStore from "../../store/useMatchStore"; // Your Zustand store
 import { setupMatchHandlers } from "../../socket/matchHandlers"; // Your socket handlers
 import { getSocket } from "../../socket/socket"; // Assuming a socket context
 import useAuthStore from "../../store/useAuthStore"; // To get the current user's info
+import { avatars } from "../../assets/Avatars";
 
 function Spinner() {
   return (
@@ -38,6 +39,7 @@ export default function MatchmakingPage() {
     matchmakingStatus,
     matchmakingMessage,
     opponentName,
+    opponentAvatar,
     opponentId,
     findPlayer,
     cancelSearch,
@@ -72,12 +74,10 @@ export default function MatchmakingPage() {
 
   const me = {
     name: authUser?.username || "You",
-    avatar: `https://api.dicebear.com/7.x/adventurer/svg?seed=${authUser?._id}`,
+    avatar: avatars[authUser?.avatar],
   };
 
-  const opponentAvatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${
-    opponentId || "Waiting"
-  }`;
+  const oppAvatar = avatars[opponentAvatar];
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4'>
@@ -122,7 +122,7 @@ export default function MatchmakingPage() {
             }`}
           >
             <img
-              src={opponentAvatar}
+              src={oppAvatar}
               alt='opponent'
               className='w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-gray-300 shadow-lg'
             />

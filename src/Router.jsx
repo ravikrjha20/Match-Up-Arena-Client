@@ -10,6 +10,9 @@ import {
   LoginPage,
   Register,
   PlayWithBot,
+  UpdateProfile,
+  PlayerHistory,
+  LeaderBoard,
 } from "./Pages";
 import PlayWithComputer from "./Pages/Play/PlayWithComp";
 import OfflineBoard from "./component/OfflineBoard";
@@ -30,6 +33,19 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePageMinor />,
         errorElement: <Error />,
+      },
+      {
+        path: "leaderboard",
+        element: <LeaderBoard />,
+        errorElement: <Error />,
+      },
+      {
+        path: "settings/edit-profile",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "game-history",
+        element: <PlayerHistory />,
       },
       {
         path: "search",

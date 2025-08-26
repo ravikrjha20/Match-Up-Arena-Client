@@ -7,6 +7,7 @@ const { user } = useAuthStore.getState();
 const useMatchStore = create((set, get) => ({
   userMask: 0,
   opponentMask: 0,
+  opponentAvatar: 0,
   turn: false,
   mark: "X",
   opponentMark: "O",
@@ -93,13 +94,14 @@ const useMatchStore = create((set, get) => ({
     }
   },
 
-  setOpponentInfo: ({ opponentId, opponentName, isFriend }) =>
+  setOpponentInfo: ({ opponentId, opponentName, isFriend, opponentAvatar }) =>
     set({
       opponentId,
       opponentName,
       matchmakingStatus: "success",
       matchmakingMessage: `Match found with ${opponentName || opponentId}!`,
       isFriend,
+      opponentAvatar,
     }),
 
   handleMatchTimeout: () => {
@@ -107,7 +109,8 @@ const useMatchStore = create((set, get) => ({
   },
 
   makeMove: async (cellIndex) => {
-    const { opponentId, userMask, opponentMask, turn, isFriend } = get();
+    const { opponentId, userMask, opponentMask, turn, isFriend, opponentName } =
+      get();
     if (!turn) return;
     get().setUserMask(get().userMask | (1 << cellIndex));
     const bit = 1 << cellIndex;
@@ -120,6 +123,7 @@ const useMatchStore = create((set, get) => ({
         mask: newMask,
         opponentMask,
         isFriend,
+        opponentName,
       });
     } catch (err) {
       console.error("Error sending move:", err);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useFriendStore from "../store/useFriendStore";
 import useClickOutside from "../hooks/useClickOutside";
 import { FaTimes, FaUsers, FaSearch } from "react-icons/fa";
-
+import { avatars } from "../assets/Avatars";
 // --- Helper Functions for Avatars (can be shared from another file) ---
 const generateColor = (name = "") => {
   let hash = 0;
@@ -27,6 +27,7 @@ const getInitials = (name = "") => {
 
 const FriendListModal = ({ isOpen, onClose }) => {
   const { friends } = useFriendStore();
+
   const modalRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,20 +62,11 @@ const FriendListModal = ({ isOpen, onClose }) => {
       <div className='flex items-center gap-3 min-w-0'>
         {/* Wrapper for avatar and online status dot */}
         <div className='relative flex-shrink-0'>
-          {user.image ? (
-            <img
-              src={user.image}
-              alt={user.name}
-              className='w-11 h-11 rounded-full object-cover'
-            />
-          ) : (
-            <div
-              className='w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-base'
-              style={{ backgroundColor: generateColor(user.name) }}
-            >
-              {getInitials(user.name)}
-            </div>
-          )}
+          <img
+            src={avatars[user.avatar]}
+            alt={user.name}
+            className='w-11 h-11 rounded-full object-cover'
+          />
           {/* ✅ Online Status Indicator */}
           {user.isOnline && (
             <span className='absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-white'></span>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { avatars } from "../assets/Avatars";
 import useAuthStore from "../store/useAuthStore";
 import useFriendStore from "../store/useFriendStore";
 
@@ -36,7 +36,6 @@ const ProfileHeader = ({ user, isMyProfile }) => {
       notMe && incomingRequests.some((r) => r?.friendId?._id === id)
     );
   }, [friends, incomingRequests, outgoingRequests, user, isMyProfile]);
-  console.log(isFriend);
 
   /* --- handlers --- */
   const handleSendRequest = () => sendRequest(user._id);
@@ -113,15 +112,11 @@ const ProfileHeader = ({ user, isMyProfile }) => {
     <div className='flex items-center justify-between gap-6 mb-8'>
       {/* left: avatar & user info */}
       <div className='flex items-center gap-4'>
-        {user?.avatar ? (
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className='w-20 h-20 rounded-full object-cover'
-          />
-        ) : (
-          <FaUserCircle size={80} className='text-gray-300' />
-        )}
+        <img
+          src={avatars[user?.avatar]}
+          alt={user?.name}
+          className='w-20 h-20 rounded-full object-cover'
+        />
         <div>
           <h2 className='text-3xl font-bold text-gray-800'>{user?.name}</h2>
           <p className='text-gray-500'>{user?.email}</p>

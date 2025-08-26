@@ -20,22 +20,11 @@ const PlayOnlyGameBoard = () => {
     opponentId,
     opponentName,
     makeMove,
+    isFriend,
     resetMatch, // ✅ result-storing function
     matchStatus, // ✅ now using backend-provided match status
   } = useMatchStore();
 
-  // console.log(
-  //   userMask,
-  //   opponentMask,
-  //   turn,
-  //   mark,
-  //   opponentMark,
-  //   opponentId,
-  //   opponentName,
-  //   makeMove,
-  //   resetMatch,
-  //   matchStatus
-  // );
   useEffect(() => {
     if (!socket) return;
     const cleanup = setupMoveHandler(socket);
@@ -46,7 +35,8 @@ const PlayOnlyGameBoard = () => {
     if (matchStatus !== "ongoing") {
       const timer = setTimeout(() => {
         resetMatch();
-        navigate("../online/quick");
+        if (!isFriend) navigate("../online/quick");
+        else navigate("../1v1/friend/online");
       }, 2000);
       return () => clearTimeout(timer);
     }

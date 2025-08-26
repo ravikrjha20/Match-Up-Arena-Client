@@ -15,17 +15,18 @@ export const setupMatchHandlers = (socket, onMatchFound) => {
   const handleMatchFound = ({
     opponentId,
     opponentName,
+    opponentAvatar,
     turn,
     mark,
     status,
     opponentMark,
   }) => {
-    console.log("🎯 Matched with:", opponentId, opponentName, turn);
     toast.success(`Matched with ${opponentName || opponentId}`);
     setOpponentInfo({
       opponentId,
       opponentName,
-      isFriend: checkFriend(opponentId),
+      isFriend: false,
+      opponentAvatar: opponentAvatar || 0,
     });
     setMatchStatus(status);
     setTurn(turn);

@@ -47,8 +47,6 @@ export const setupInviteHandlers = (socket, onMatchFound) => {
     status,
     opponentMark,
   }) => {
-    console.log("🎯 Matched with:", opponentId, opponentName, turn);
-
     toast.success(`🔥 Match found with ${opponentName || opponentId}`, {
       autoClose: 2500,
     });
@@ -56,7 +54,7 @@ export const setupInviteHandlers = (socket, onMatchFound) => {
     setOpponentInfo({
       opponentId,
       opponentName,
-      isFriend: checkFriend(opponentId),
+      isFriend: true,
     });
     setMatchStatus(status);
     setTurn(turn);

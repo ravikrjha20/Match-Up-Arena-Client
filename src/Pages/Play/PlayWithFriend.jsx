@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFriendStore from "../../store/useFriendStore";
 import useMatchStore from "../../store/useMatchStore";
 import { FaGamepad, FaPaperPlane } from "react-icons/fa";
+import { avatars } from "../../assets/Avatars";
 
 // Avatar color generator
 const generateColor = (name = "") => {
@@ -65,20 +66,11 @@ const PlayWithFriendPage = () => {
       {/* Avatar */}
       <div className='flex items-center gap-4'>
         <div className='relative flex-shrink-0'>
-          {user.image ? (
-            <img
-              src={user.image}
-              alt={user.name}
-              className='w-14 h-14 rounded-full object-cover'
-            />
-          ) : (
-            <div
-              className='w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-xl'
-              style={{ backgroundColor: generateColor(user.name) }}
-            >
-              {getInitials(user.name)}
-            </div>
-          )}
+          <img
+            src={avatars[user.avatar]}
+            alt={user.name}
+            className='w-14 h-14 rounded-full object-cover'
+          />
           {user.isOnline && (
             <span className='absolute bottom-0 right-0 block h-4 w-4 rounded-full bg-green-500 border-2 border-white animate-pulse'></span>
           )}

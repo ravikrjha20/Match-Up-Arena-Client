@@ -13,8 +13,6 @@ const Notification = () => {
 
   if (type === "invitation") {
     const handleAccept = () => {
-      console.log(onAccept);
-
       if (onAccept) onAccept();
       hideNotification();
     };

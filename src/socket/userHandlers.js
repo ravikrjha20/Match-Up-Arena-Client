@@ -6,7 +6,5 @@ export const setupUserHandlers = (socket, setOnlineUsers) => {
     setOnlineUsers(userIds);
   });
 
-  socket.on("connect", () => {
-    console.log("🔌 Connected to socket.io with ID:", socket.id);
-  });
+  socket.on("connect", () => {});
 };

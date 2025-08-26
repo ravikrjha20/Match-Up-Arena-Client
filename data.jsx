@@ -58,7 +58,7 @@ export const getNavData = (user) => [
   },
   {
     label: user?.name || "Login",
-    icon: user?.avatar || <FaUser className='text-lg' />,
+    icon: <FaUser className='text-lg' />,
     tab: "Profile",
     authOnly: true,
     children: user

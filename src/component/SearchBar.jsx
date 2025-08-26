@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import useSearchStore from "../store/useSearchStore";
 import { useNavigate } from "react-router-dom";
+import { avatars } from "../assets/Avatars";
 const SearchBar = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,7 +101,7 @@ const SearchBar = () => {
           >
             {
               <img
-                src={user.image || `https://i.pravatar.cc/150?u=${user._id}`}
+                src={avatars[user?.avatar || 0]}
                 alt={user.name}
                 className='w-7 h-7 rounded-full object-cover'
               />

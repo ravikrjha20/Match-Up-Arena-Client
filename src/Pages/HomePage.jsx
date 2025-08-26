@@ -12,19 +12,12 @@ const HomePage = () => {
   const socket = getSocket();
 
   const handleStartGame = ({ opponentId, opponentName }) => {
-    console.log("navigating to letsPlay Page");
     navigate(`/online/quick/letsplay`);
   };
 
   useEffect(() => {
     if (socket && user) {
       const onMatchFound = ({ opponentId, opponentName }) => {
-        console.log(
-          "opponentId: ",
-          opponentId,
-          ", opponentName: ",
-          opponentName
-        );
         setTimeout(() => {
           handleStartGame({ opponentId, opponentName });
         }, 2000);
