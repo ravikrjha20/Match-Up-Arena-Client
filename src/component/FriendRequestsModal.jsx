@@ -45,7 +45,7 @@ const FriendRequestsModal = ({ isOpen, onClose }) => {
 
   // --- Sub-component for a single request row with enhanced styling ---
   const RequestRow = ({ request, type }) => {
-    const user = request.friendId;
+    const user = request;
     if (!user) return null;
 
     return (

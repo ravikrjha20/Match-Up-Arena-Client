@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import useAuthStore from "../store/useAuthStore";
 import ShowAvatars from "../component/ShowAvatars"; // adjust path
 import { avatars } from "../assets/Avatars"; // adjust path
-
+import PleaseLogin from "./PleaseLogin";
 const UpdateProfile = () => {
   const { user, update } = useAuthStore();
   const [showAvatarPopup, setShowAvatarPopup] = useState(false);
@@ -74,7 +74,10 @@ const UpdateProfile = () => {
       setIsLoading(false);
     }
   };
-
+  if (!user)
+    return (
+      <PleaseLogin msg={`You must be logged in to view and update profile`} />
+    );
   return (
     <>
       <div className='min-h-screen bg-gray-100 flex items-center justify-center p-4'>

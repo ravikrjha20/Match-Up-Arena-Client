@@ -23,9 +23,9 @@ const useFriendStore = create((set, get) => ({
       throw error;
     }
   },
-  getAllFriends: async () => {
+  getAllFriends: async (friend) => {
     try {
-      const res = await axiosInstance.get("/friend/getallfriend/");
+      const res = await axiosInstance.get(`/friend/getallfriend/${friend}`);
       set({ friends: res.data.friends || [] });
     } catch (err) {
       toast.error("Failed to fetch friends");
@@ -38,6 +38,7 @@ const useFriendStore = create((set, get) => ({
     try {
       const res = await axiosInstance.get("/friend/incoming");
       const requests = res.data.requests || [];
+
       set({
         incomingRequests: requests,
         pendingRequestsCount: requests.length,
@@ -76,10 +77,11 @@ const useFriendStore = create((set, get) => ({
 
   acceptRequest: async (friendId) => {
     try {
-      await axiosInstance.post(`/friend/accept/${friendId}`);
+      const res = await axiosInstance.post(`/friend/accept/${friendId}`);
+      console.log(res);
+
       toast.success("Friend request accepted!");
       /* 🔧 refresh affected slices */
-      await get().getAllFriends();
       await get().getIncomingRequests();
     } catch (err) {
       toast.error("Could not accept friend request");
@@ -104,7 +106,6 @@ const useFriendStore = create((set, get) => ({
     try {
       await axiosInstance.delete(`/friend/remove/${friendId}`);
       toast.success("Friend removed!");
-      await get().getAllFriends(); // refresh
     } catch (err) {
       toast.error("Could not remove friend");
       console.error(err);

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
 import useFriendStore from "../store/useFriendStore";
 import useSearchStore from "../store/useSearchStore";
-
 import ProfileHeader from "../component/ProfileHeader";
 import DashboardSection from "../component/DashboardSection";
 import LoadingSpinner from "../component/Loading";
@@ -41,13 +40,14 @@ const Profile = () => {
     useSearchStore();
 
   // --- Set up socket listeners ---
+
+  const socket = getSocket();
   useEffect(() => {
-    const socket = getSocket();
-    if (socket) {
-      const cleanup = setUpFriends(socket); // returns cleanup function
+    if (socket && username) {
+      const cleanup = setUpFriends(socket, username); // returns cleanup function
       return cleanup; // remove listeners when unmounting
     }
-  }, []);
+  }, [socket, username]);
 
   // --- Load profile data ---
   useEffect(() => {
@@ -55,11 +55,11 @@ const Profile = () => {
     const loadProfileData = async () => {
       if (username === "null") return;
       setIsLoading(true);
-      await getAllFriends();
-      await getIncomingRequests();
-      await getOutgoingRequests();
-      if (!isMyProfile) {
-        await searchProfile(username);
+      await getAllFriends(username);
+      await searchProfile(username);
+      if (authUser) {
+        await getIncomingRequests();
+        await getOutgoingRequests();
       }
       if (isSubscribed) setIsLoading(false);
     };
@@ -70,6 +70,7 @@ const Profile = () => {
     };
   }, [
     username,
+    authUser,
     isMyProfile,
     getAllFriends,
     getIncomingRequests,
@@ -79,6 +80,7 @@ const Profile = () => {
   ]);
 
   const profileData = isMyProfile ? authUser : searchedProfile;
+
   if (isLoading) return <LoadingSpinner />;
 
   const friendsCount = friends.length;

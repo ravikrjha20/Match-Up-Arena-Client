@@ -18,7 +18,6 @@ const useAuthStore = create((set, get) => ({
       throw error;
     }
   },
-
   login: async (req) => {
     try {
       const res = await axiosInstance.post("/auth/login", req, {

@@ -5,6 +5,7 @@ import { setupMatchHandlers } from "../../socket/matchHandlers"; // Your socket 
 import { getSocket } from "../../socket/socket"; // Assuming a socket context
 import useAuthStore from "../../store/useAuthStore"; // To get the current user's info
 import { avatars } from "../../assets/Avatars";
+import PleaseLogin from "../PleaseLogin";
 
 function Spinner() {
   return (
@@ -78,7 +79,8 @@ export default function MatchmakingPage() {
   };
 
   const oppAvatar = avatars[opponentAvatar];
-
+  if (!authUser)
+    return <PleaseLogin msg={`You must be logged in to play online match`} />;
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4'>
       <div className='w-full max-w-lg bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center relative overflow-hidden'>

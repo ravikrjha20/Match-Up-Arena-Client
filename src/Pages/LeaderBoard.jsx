@@ -2,6 +2,8 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import useAuthStore from "../store/useAuthStore";
 import { HiClock, HiChartBar } from "react-icons/hi2";
+import PleaseLogin from "./PleaseLogin";
+import PlayerLeaderBoard from "../component/PlayerLeaderBoard";
 
 // A simple, elegant loading component
 const LoadingState = () => (
@@ -24,11 +26,7 @@ const EmptyState = () => (
 
 const LeaderBoard = () => {
   const { user } = useAuthStore();
-
-  if (!user) {
-    return <LoadingState />;
-  }
-
+  if (!user) return <PleaseLogin />;
   if (!user.matches || user.matches.length < 1) {
     return <EmptyState />;
   }
@@ -183,6 +181,7 @@ const LeaderBoard = () => {
             height={450}
           />
         </div>
+        <PlayerLeaderBoard userId={user._id} />
       </div>
     </div>
   );

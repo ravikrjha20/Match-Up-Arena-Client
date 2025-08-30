@@ -8,7 +8,7 @@ const useSearchStore = create((set) => ({
   suggestedFriends: [],
   searchedUsers: [],
   searchedProfile: null,
-
+  leaderBoard: [],
   searchProfile: async (username) => {
     try {
       const res = await axiosInstance.get(`/friend/profile/${username}`);

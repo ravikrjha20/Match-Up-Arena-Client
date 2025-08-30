@@ -36,7 +36,7 @@ const DashboardSection = ({
           wins={user.wins}
           losses={user.losses}
           draws={user.draws}
-          onClick={() => navigate("/game-history")}
+          onClick={() => isMyProfile && navigate("/game-history")}
         />
 
         <ProgressStatCard
@@ -45,7 +45,7 @@ const DashboardSection = ({
           value={user.rating}
           maxValue={MAX_RATING}
           color='yellow'
-          onClick={() => navigate("/leaderboard")}
+          onClick={() => isMyProfile && navigate("/leaderboard")}
         />
 
         <StatCard
@@ -53,7 +53,6 @@ const DashboardSection = ({
           title='Coins'
           value={user.coins}
           color='amber'
-          onClick={() => navigate("/store")}
         />
 
         {isMyProfile ? (

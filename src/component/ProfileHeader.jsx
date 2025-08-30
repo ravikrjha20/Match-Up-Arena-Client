@@ -28,10 +28,9 @@ const ProfileHeader = ({ user, isMyProfile }) => {
     const id = user?._id;
     const notMe = !isMyProfile;
 
-    setIsFriend(notMe && friends.some((f) => f?._id === id));
-    setHasSentRequest(
-      notMe && outgoingRequests.some((r) => r?.friendId?._id === id)
-    );
+    setIsFriend(notMe && friends.some((f) => f?._id === authUser._id));
+    setHasSentRequest(notMe && outgoingRequests.some((r) => r?._id === id));
+
     setHasReceivedRequest(
       notMe && incomingRequests.some((r) => r?.friendId?._id === id)
     );

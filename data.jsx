@@ -68,10 +68,6 @@ export const getNavData = (user) => [
             path: `/profile/${user?.username || "null"}`,
           },
           {
-            label: "Settings",
-            path: "/profile/settings",
-          },
-          {
             label: "Logout",
             path: "/auth/logout",
           },

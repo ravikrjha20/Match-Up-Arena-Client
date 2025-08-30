@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import {
   HomePage,
   About,
-  Dashboard,
   Error,
   Logout,
   HomePageMinor,
@@ -54,11 +53,6 @@ const router = createBrowserRouter([
       {
         path: "About",
         element: <About />,
-        errorElement: <Error />,
-      },
-      {
-        path: "dashboard",
-        element: <Dashboard />,
         errorElement: <Error />,
       },
       {

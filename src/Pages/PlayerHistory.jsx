@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi2";
 import useAuthStore from "../store/useAuthStore";
 import { avatars } from "../assets/Avatars"; // Make sure to import your avatars
-
+import PleaseLogin from "./PleaseLogin";
 /* ───────────────── helpers ───────────────── */
 const fmt = (d) =>
   new Date(d).toLocaleString(undefined, {
@@ -62,6 +62,10 @@ const PlayerHistory = () => {
 
   const matches = user?.matches || [];
 
+  if (!user)
+    return (
+      <PleaseLogin msg={`You must be logged in to view and update profile`} />
+    );
   return (
     <div className='min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#3b0764] p-6 sm:p-10'>
       <div className='mx-auto max-w-6xl'>

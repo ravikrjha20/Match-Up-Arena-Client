@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import NavButtons from "../items/NavButtons";
 import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -28,7 +29,9 @@ const NavBar = () => {
       <div className='flex justify-between items-center w-full md:w-auto gap-4'>
         {" "}
         {/* 1. ADDED GAP */}
-        <div className='text-2xl font-bold'>TicTacToe</div>
+        <Link to='../'>
+          <div className='text-2xl font-bold'>TicTacToe</div>
+        </Link>
         {(!isMobile || !showNavbar) && <SearchBar />}
         {isMobile && (
           <div

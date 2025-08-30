@@ -3,6 +3,8 @@ import useFriendStore from "../../store/useFriendStore";
 import useMatchStore from "../../store/useMatchStore";
 import { FaGamepad, FaPaperPlane } from "react-icons/fa";
 import { avatars } from "../../assets/Avatars";
+import useAuthStore from "../../store/useAuthStore";
+import PleaseLogin from "../PleaseLogin";
 
 // Avatar color generator
 const generateColor = (name = "") => {
@@ -36,6 +38,7 @@ const getInitials = (name) => {
 
 const PlayWithFriendPage = () => {
   const { friends, getAllFriends } = useFriendStore();
+  const { user: authUser } = useAuthStore();
   const {
     setMatchMakingStatus,
     inviteFriend,
@@ -53,14 +56,13 @@ const PlayWithFriendPage = () => {
 
   // Reset UI when matchmaking ends
   useEffect(() => {
-    if (matchmakingStatus === "idle") {
-      getAllFriends();
+    if (authUser && matchmakingStatus === "idle") {
+      getAllFriends(authUser.username);
       setWaitingFriend(null);
     }
-  }, [matchmakingStatus, getAllFriends]);
+  }, [matchmakingStatus, getAllFriends, authUser]);
 
   const sortedFriends = [...friends].sort((a, b) => b.isOnline - a.isOnline);
-
   const FriendCard = ({ user }) => (
     <div className='bg-white rounded-2xl shadow-lg p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col sm:flex-row items-center justify-between gap-4'>
       {/* Avatar */}
@@ -101,7 +103,12 @@ const PlayWithFriendPage = () => {
       </div>
     </div>
   );
-
+  if (!authUser)
+    return (
+      <PleaseLogin
+        msg={`You must be logged in to play online match with you friend`}
+      />
+    );
   return (
     <div className='min-h-screen bg-slate-100 p-4 sm:p-6 md:p-8 relative'>
       {/* Content (No longer blurs here) */}
